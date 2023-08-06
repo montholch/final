@@ -6,3 +6,7 @@ SELECT * FROM TABLE;
 ```py
 print("hello world")
 ```
+
+```py
+print("something")
+```
