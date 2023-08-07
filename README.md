@@ -37,6 +37,10 @@ Once the gathered datasets are ready. Now it should move to another process whic
 
 # 2. Data Extraction - Upload dataset into database
 
+### Step 1: Create a schema
+
+Before upload the 
+
 <br/>
 <br/>
 
