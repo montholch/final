@@ -6,12 +6,14 @@ This assignment compounds with Data extraction, Data transformation, and Data lo
 
 # 1. Data Selection
 
-<p>Select the Airline Passenger Satisfaction dataset from kaggle.com for analyzing</p>
+Step 1: Select the Airline Passenger Satisfaction dataset from kaggle.com for analyzing.
 
-<h3>Reference URL</h3>
-<a>https://www.kaggle.com/datasets/mysarahmadbhat/airline-passenger-satisfaction?select=airline_passenger_satisfaction.csv</a>
+<b>Reference URL: </b>
+<a>https://www.kaggle.com/datasets/mysarahmadbhat/airline-passenger-satisfaction</a>
 
 When extract the downloaded a zip file, there is a CSV file name "airline_passenger_satisfaction.csv". It has <b>24</b> variables and <b>129,880</b> observations.
+
+<br/>
 
 ![Screenshot](./img/data_selection/airline_satis_csv.png)
 
@@ -19,9 +21,12 @@ The zip file also give a data dictionary file as a CEV file named "data_dictiona
 
 ![Screenshot](./img/data_selection/airline_satis_datadict.png)
 
+Step 2: Select the Airline Review from kaggle.com to find the relationship between airline review and airline passenger satisfaction.
 
+<b>Reference URL: </b>
+<a>https://www.kaggle.com/datasets/khushipitroda/airline-reviews</a>
 
-
+When extract the downloaded a zip file, there is a CSV file name "Airline_Reviews.csv". It has <b>xx</b> variables and <b>xx</b> observations. 
 <br/>
 <br/>
 
