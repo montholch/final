@@ -10,3 +10,7 @@ print("hello world")
 ```py
 print("something")
 ```
+
+```sql
+select * from TABLE;
+```
