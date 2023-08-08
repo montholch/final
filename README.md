@@ -5,7 +5,7 @@
 
 # 1. Data Selection - Find the datasets from kaggle.com for select the data to process.
 
-### Step 1: Select the Airline Passenger Satisfaction dataset from kaggle.com for analyzing.
+### Select the Airline Passenger Satisfaction dataset from kaggle.com for analyzing.
 
 __URL :__ [Airline Passenger Satisfaction](https://www.kaggle.com/datasets/mysarahmadbhat/airline-passenger-satisfaction)
 
@@ -16,8 +16,6 @@ When extract the downloaded a zip file, there is a CSV file name "airline_passen
 The zip file also give a data dictionary file as a CSV file named "data_dictionary.csv" to reference.
 
 ![Screenshot](./img/data_selection/airline_satis_datadict.png)
-
-### Step 2: Create the dimension tables to store information what related to Airline Passenger Satisfaction dataset.
 
 ### Summary
 
@@ -55,9 +53,63 @@ Use the MySQL Workbench tool to upload the datasets with this step below
 
 ![Screenshot](./img/data_extraction/choose_file_path.png)
 
+Select the CSV file by click on __Browse...__ button
+
 #### After Select file
 
+![Screenshot](./img/data_extraction/selected_file_path.png)
 
+Click __Next__ button
+
+3. Review default generate table name, or change the table name
+
+![Screenshot](./img/data_extraction/view_table_name.png)
+
+Click __Next__ button
+
+4. Review auto generate data type from imported CSV file
+
+![Screenshot](./img/data_extraction/view_imported_datatype.png)
+
+Click __Next__ button
+
+5. Review overall process 
+
+![Screenshot](./img/data_extraction/view_overview_before_import.png)
+
+Click __Next__ button
+
+6. Importing the data
+
+![Screenshot](./img/data_extraction/importing_data.png)
+
+Click __Next__ button
+
+7. Import result
+
+![Screenshot](./img/data_extraction/import_result.png)
+
+Click __Finish__ button
+
+8. View data result
+
+![Screenshot](./img/data_extraction/imported_table.png)
+
+<br/>
+
+9. Select data from imported dataset into table with SQL command
+
+```sql
+SELECT * FROM airline_passenger_satisfaction;
+```
+
+#### Result
+
+![Screenshot](./img/data_extraction/select_query_result.png)
+
+### Step 3: Create dimension tables what are related to the Airline Passenger Satisfaction as the fact table as shown as diagrams below
+
+![Screenshot](./img/data_extraction/ER_Diagram.png)
 
 <br/>
 
