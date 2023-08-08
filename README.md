@@ -436,6 +436,8 @@ ALTER TABLE grouped_customer RENAME COLUMN Recommend to recommend;
 
 ![Screenshot](./img/data_loading/after_rename.png)
 
+### Step 3: Create view to retrieve values for analyze
+
 <br/>
 <br/>
 
