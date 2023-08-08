@@ -111,6 +111,12 @@ SELECT * FROM airline_passenger_satisfaction;
 
 ![Screenshot](./img/data_extraction/ER_Diagram.png)
 
+#### Create class type table to store class type as structure
+
+```sql
+-- Create class_type table
+```
+
 <br/>
 
 # 3. Data Transformation
