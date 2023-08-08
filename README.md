@@ -398,6 +398,44 @@ From imported data and performed the data cleaning and transforming, the final o
 
 # 4. Data Loading
 
+### Step 1: Import the CSV file what grouped and extracted from Data Transformation
+
+Perform uploaded the CSV file from transformed data
+
+![Screenshot](./img/data_loading/import_data.png)
+
+Result of imported data
+
+![Screenshot](./img/data_loading/import_result.png)
+
+### Step 2: Recheck database schema structure
+
+1. Rename column for develop SQL easier
+
+![Screenshot](./img/data_loading/before_rename.png)
+
+2. Execute these SQL commands to rename columns
+
+```sql
+-- Rename column "Date Flown" to date_flown
+ALTER TABLE grouped_customer RENAME COLUMN `Date Flown` to date_flown;
+
+-- Rename column Gender to gender
+ALTER TABLE grouped_customer RENAME COLUMN Gender TO gender;
+
+-- Rename column Age to age
+ALTER TABLE grouped_customer RENAME COLUMN Age TO age;
+
+-- Rename column Verified to verified
+ALTER TABLE grouped_customer RENAME COLUMN Verified TO verified;
+
+-- Rename column Recommend to recommend
+ALTER TABLE grouped_customer RENAME COLUMN Recommend to recommend;
+```
+3. Result after rename columns
+
+![Screenshot](./img/data_loading/after_rename.png)
+
 <br/>
 <br/>
 
