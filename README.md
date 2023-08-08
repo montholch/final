@@ -5,7 +5,7 @@
 
 # 1. Data Selection - Find the datasets from kaggle.com for select the data to process.
 
-### Select the Airline Passenger Satisfaction dataset from kaggle.com for analyzing.
+### a. Select the Airline Passenger Satisfaction dataset from kaggle.com for analyzing.
 
 __URL :__ [Airline Passenger Satisfaction](https://www.kaggle.com/datasets/mysarahmadbhat/airline-passenger-satisfaction)
 
@@ -16,6 +16,14 @@ When extract the downloaded a zip file, there is a CSV file name "airline_passen
 The zip file also give a data dictionary file as a CSV file named "data_dictionary.csv" to reference.
 
 ![Screenshot](./img/data_selection/airline_satis_datadict.png)
+
+### b. Create the dummy set named "airline_comments.csv" to find relationship between passenger satisfaction with airlines
+
+![Screenshot](./img/data_selection/airline_comment_csv.png)
+
+The data diction for dummy file have been created for reference.
+
+![Screenshot](./img/data_selection/airline_comment_datadict.png)
 
 ### Summary
 
