@@ -17,17 +17,7 @@ The zip file also give a data dictionary file as a CSV file named "data_dictiona
 
 ![Screenshot](./img/data_selection/airline_satis_datadict.png)
 
-### Step 2: Select the Airline Review from kaggle.com to find the relationship between airline review and airline passenger satisfaction.
-
-__URL :__ [Airline Review](https://www.kaggle.com/datasets/khushipitroda/airline-reviews)
-
-When extract the downloaded a zip file, there is a CSV file name "Airline_Reviews.csv". It has __20__ variables and __23,170__ observations.  
-
-![Screenshot](./img/data_selection/airline_review.png)
-
-This dataset has no data dictionary but it can found from the kaggle.com website it has show the data dictionary for Airline Reviews below.  
-
-![Screenshot](./img/data_selection/airline_review_datadict.png)
+### Step 2: Create the dimension tables to store information what related to Airline Passenger Satisfaction dataset.
 
 ### Summary
 
@@ -39,9 +29,36 @@ Once the gathered datasets are ready. Now it should move to another process whic
 
 ### Step 1: Create a schema
 
-Before upload the 
+Before upload the datasets, it requires to create a schema named "airline_quality" with SQL command below
+
+```sql
+CREATE SCHEMA `airline_quality`;
+```
+
+When execute the command above, the MySQL database creates a new schema as entered the command.
+
+![Screenshot](./img/data_extraction/create_schema.png)
 
 <br/>
+
+### Step 2: Uploaded datasets into the created schema
+
+Use the MySQL Workbench tool to upload the datasets with this step below
+
+1. Right-Click on tab __tables__, select __Table Data Import Wizard__.
+
+![Screenshot](./img/data_extraction/selected_table_data_import_wizard.png)
+
+2. Select the dataset file path
+
+#### Before Select file
+
+![Screenshot](./img/data_extraction/choose_file_path.png)
+
+#### After Select file
+
+
+
 <br/>
 
 # 3. Data Transformation
