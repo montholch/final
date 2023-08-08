@@ -246,7 +246,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 ```
 
-#### Query dataset from database
+#### Setup value for create an engine
 ```py
 # Declare engine variables
 user = "root"
@@ -258,7 +258,7 @@ database = "airline_quality"
 engine = create_engine('mysql+mysqldb://%s:%s@localhost:%i/%s'%(user, password, port, database))
 ```
 
-#### Retreive dataset from database
+#### Retrieve dataset from database
 ```py
 # Retrieve airline passenger satisfaction from database
 select_command = "SELECT * FROM airline_passenger_satisfaction"
@@ -270,9 +270,129 @@ select_command = "SELECT * FROM airline_comments"
 passenger_comment = pd.read_sql_query(select_command, engine)
 passenger_comment.tail()
 ```
-#### Retrieve result
+#### Example of Retrieved from database for airline_passenger_satisfaction and airline_comments
+
+a. airline_passenger_satisfaction table - Show all imported data
 
 ![Screenshot](./img/data_transform/query_result.png)
+
+b. airline_comments table - Show all imported data
+
+![Screenshot](./img/data_transform/query_result_2.png)
+
+#### Select and join values what ID existing from airline_comments
+
+```py
+# Select values what have airline comments
+selected_passenger_satis = passenger_satis[passenger_satis["ID"] <= 4336]
+
+# Perform join 2 datasets
+merge_df = pd.merge(
+    selected_passenger_satis, passenger_comment, left_on="ID", right_on="ID", how="left"
+).reset_index(drop=True)
+```
+
+#### Transform merged dataset
+```py
+# Convert customer Type value to dimension table
+merge_df["customer_type"] = np.where(merge_df["Customer Type"] == "First-time", 1, 2)
+
+# Convert Type of Travel to dimension table
+merge_df["travel_type"] = np.where(merge_df["Type of Travel"] == "Business", 1, 2)
+
+# Convert Class to dimension table
+merge_df["class_type"] = np.where(
+    merge_df["Class"] == "Business",
+    1,
+    np.where(merge_df["Class"] == "Economy", 2, 3),
+)
+
+# Convert customer satisfaction to dimension table
+merge_df["satis_level"] = np.where(
+    merge_df["Satisfaction"] == "Neutral or Dissatisfied", 1, 2
+)
+
+# Check null value for "Value for Money" variable
+merge_df["Value For Money"].isnull().sum()
+
+# Fill N/A value for "Value for Money" variable
+merge_df["Value For Money"] = merge_df["Value For Money"].fillna(0)
+
+# Change float datatype into integer data type
+merge_df["Value For Money"] = merge_df["Value For Money"].astype(int)
+```
+
+#### Grouped data to export as the CSV file
+
+Group and export grouped data by "Date Flown" variable
+```py
+# Grouped by "Date Flown" variable and selected only variable what impact to airline
+grouped_customer = (
+    merge_df.groupby(
+        [
+            "Date Flown",
+            "Gender",
+            "Age",
+            "customer_type",
+            "travel_type",
+            "class_type",
+            "satis_level",
+            "Verified",
+            "Recommend",
+        ]
+    )
+    .count()
+    .reset_index()
+)[
+    [
+        "Date Flown",
+        "Gender",
+        "Age",
+        "customer_type",
+        "travel_type",
+        "class_type",
+        "satis_level",
+        "Verified",
+        "Recommend",
+    ]
+]
+
+# Export grouped customer from selected criteria as the CSV file
+grouped_customer.to_csv("../../file/grouped_customer.csv", index=True)
+```
+
+Select evaluate filled-in by passenger for analyze further more
+```py
+# Extract scores and other values from evaluate form for each customer
+evaluate_score = merge_df[
+    [
+        "Departure Delay",
+        "Arrival Delay",
+        "Departure and Arrival Time Convenience",
+        "Ease of Online Booking",
+        "Check-in Service",
+        "Online Boarding",
+        "Gate Location",
+        "On-board Service",
+        "Seat Comfort",
+        "Leg Room Service",
+        "Cleanliness",
+        "Food and Drink",
+        "In-flight Service",
+        "In-flight Wifi Service",
+        "In-flight Entertainment",
+        "Baggage Handling",
+        "Value For Money",
+    ]
+]
+
+# Export evaluate score filled by passengers
+evaluate_score.to_csv("../../file/evaluate_score.csv", index=True)
+```
+
+### Summary
+
+From imported data and performed the data cleaning and transforming, the final of processes, they are 2 exported CSV files what can be uploaded into database for further analyze.
 
 <br/>
 
