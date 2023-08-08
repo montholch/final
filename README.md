@@ -227,10 +227,32 @@ Create a jupyter notebook file to transform the data.
 
 ### Step 2: Perform load library for transform the data
 
+#### Import pandas and sqlalchemy libraries
 ```py
 # Import library
 import pandas as pd
+from sqlalchemy import create_engine
 ```
+
+#### Query dataset from database
+```py
+# Declare engine variables
+user = "root"
+password = ""
+port = 3306
+database = "airline_quality"
+
+# Create engine to query data from database
+engine = create_engine('mysql+mysqldb://%s:%s@localhost:%i/%s'%(user, password, port, database))
+
+# Retrieve airline passenger satisfaction from database
+select_command = "SELECT * FROM airline_passenger_satisfaction"
+df = pd.read_sql_query(select_command, engine)
+df.head()
+```
+#### Retrieve result
+
+![Screenshot](./img/data_transform/query_result.png)
 
 <br/>
 
