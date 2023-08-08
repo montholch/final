@@ -115,6 +115,10 @@ SELECT * FROM airline_passenger_satisfaction;
 
 ![Screenshot](./img/data_extraction/select_query_result.png)
 
+10. Perform import airline_comments.csv as well
+
+![Screenshot](./img/data_extraction/imported_table_2.png)
+
 ### Step 3: Create dimension tables what are related to the Airline Passenger Satisfaction as the fact table as shown as diagrams below
 
 ![Screenshot](./img/data_extraction/ER_Diagram.png)
