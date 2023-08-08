@@ -111,17 +111,127 @@ SELECT * FROM airline_passenger_satisfaction;
 
 ![Screenshot](./img/data_extraction/ER_Diagram.png)
 
-#### Create class type table to store class type as structure
+#### 1. Create Customer type table
+
+```sql
+-- Create customer_type table
+CREATE TABLE customer_type (
+    customer_type_id int NOT NULL,
+    type varchar(255),
+    PRIMARY KEY (customer_type_id)
+);
+
+-- Insert value into customer_type table
+INSERT INTO customer_type values (1, 'First-time');
+INSERT INTO customer_type values (2, 'Returning');
+```
+
+#### Result of create and insert customer_type table
+
+![Screenshot](./img/data_extraction/customer_type_result.png)
+
+#### 2. Create class type table
 
 ```sql
 -- Create class_type table
+CREATE TABLE class_type (
+    class_type_id int NOT NULL,
+    type varchar(255),
+    PRIMARY KEY (class_type_id)
+);
+
+-- Insert value into class_type table
+INSERT INTO class_type values (1, 'Business');
+INSERT INTO class_type values (2, 'Economy');
+INSERT INTO class_type values (3, 'Economy Plus');
 ```
+
+#### Result of create and insert customer_type table
+
+![Screenshot](./img/data_extraction/class_type_result.png)
+
+#### 3. Create travel type table
+
+```sql
+-- Create travel_type table
+CREATE TABLE travel_type (
+    travel_type_id int NOT NULL,
+    type varchar(255),
+    PRIMARY KEY (travel_type_id)
+);
+
+-- Insert value into class_type table
+INSERT INTO travel_type values (1, 'Business');
+INSERT INTO travel_type values (2, 'Personal');
+```
+
+#### Result of create and insert travel_type table
+
+![Screenshot](./img/data_extraction/travel_type_result.png)
+
+#### 4. Create satisfaction level table
+
+```sql
+-- Create satis_level table
+CREATE TABLE satis_level (
+    satis_id int NOT NULL,
+    level varchar(255),
+    PRIMARY KEY (satis_id)
+);
+
+-- Insert value into class_type table
+INSERT INTO satis_level values (1, 'Neutral or Dissatisfied');
+INSERT INTO satis_level values (2, 'Satisfied');
+```
+
+#### 5. Result of create and insert satis_level table
+
+![Screenshot](./img/data_extraction/satis_level_result.png)
+
+#### Create delay type table
+
+```sql
+-- Create delay_type table
+CREATE TABLE delay_type (
+    delay_type_id int NOT NULL,
+    level varchar(255),
+    min_late int,
+    max_late int,
+    compensate int,
+    PRIMARY KEY (delay_type_id)
+);
+
+-- Insert value into class_type table
+INSERT INTO delay_type values (1, '1', 0, 180, 0);
+INSERT INTO delay_type values (2, '2', 180, 300, 400);
+INSERT INTO delay_type values (3, '3', 300, 540, 700);
+INSERT INTO delay_type values (4, '4', 540, 720, 1000);
+```
+#### Result of create and insert delay_type table
+
+![Screenshot](./img/data_extraction/delay_type_result.png)
+
+### Summary
+
+Once Airline Passenger Satisfaction dataset is uploaded into database and dimension tables are also created. The next step is transform the dataset into structure table what suitable to store the data.
 
 <br/>
 
 # 3. Data Transformation
 
-<br/>
+### Step 1: Create a notebook file to perform transform the data
+
+Create a jupyter notebook file to transform the data.
+
+![Screenshot](./img/data_transform/create_python_file.png)
+
+### Step 2: Perform load library for transform the data
+
+```py
+# Import library
+import pandas as pd
+```
+
 <br/>
 
 # 4. Data Loading
