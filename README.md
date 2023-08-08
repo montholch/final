@@ -256,11 +256,19 @@ database = "airline_quality"
 
 # Create engine to query data from database
 engine = create_engine('mysql+mysqldb://%s:%s@localhost:%i/%s'%(user, password, port, database))
+```
 
+#### Retreive dataset from database
+```py
 # Retrieve airline passenger satisfaction from database
 select_command = "SELECT * FROM airline_passenger_satisfaction"
 df = pd.read_sql_query(select_command, engine)
 df.head()
+
+# Retrieve airline comments from database
+select_command = "SELECT * FROM airline_comments"
+passenger_comment = pd.read_sql_query(select_command, engine)
+passenger_comment.tail()
 ```
 #### Retrieve result
 
@@ -274,19 +282,3 @@ df.head()
 <br/>
 
 # 5. Reflection
-
-```sql
-SELECT * FROM TABLE;
-```
-
-```py
-print("hello world")
-```
-
-```py
-print("something")
-```
-
-```sql
-select * from TABLE;
-```
