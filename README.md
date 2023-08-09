@@ -330,6 +330,7 @@ Group and export grouped data by "Date Flown" variable
 grouped_customer = (
     merge_df.groupby(
         [
+            "Airline Name",
             "Date Flown",
             "Gender",
             "Age",
@@ -345,6 +346,7 @@ grouped_customer = (
     .reset_index()
 )[
     [
+        "Airline Name",
         "Date Flown",
         "Gender",
         "Age",
@@ -418,6 +420,9 @@ Result of imported data
 
 ```sql
 -- Rename column "Date Flown" to date_flown
+ALTER TABLE grouped_customer RENAME COLUMN `Airline Name` TO airline_name;
+
+-- Rename column "Date Flown" to date_flown
 ALTER TABLE grouped_customer RENAME COLUMN `Date Flown` to date_flown;
 
 -- Rename column Gender to gender
@@ -437,6 +442,64 @@ ALTER TABLE grouped_customer RENAME COLUMN Recommend to recommend;
 ![Screenshot](./img/data_loading/after_rename.png)
 
 ### Step 3: Create view to retrieve values for analyze
+
+1. Create view to view grouped customer
+
+```sql
+-- Create or replace view for customer satisfaction report
+CREATE OR REPLACE VIEW View_Customer_Satisfaction AS
+SELECT
+	a.airline_name as airline_name, 
+	a.date_flown as date_flown,
+    a.gender as gender,
+    a.age as age,
+    b.type as customer_type, 
+    c.type as travel_type, 
+    d.type as class_type, 
+    e.level as satis_level, 
+    a.verified as verified, 
+    a.recommend as recommend
+FROM grouped_customer AS a 
+LEFT JOIN customer_type AS b
+	ON a.customer_type = b.customer_type_id
+LEFT JOIN travel_type AS c
+	ON a.travel_type = c.travel_type_id
+LEFT JOIN class_type AS d
+	ON a.class_type = d.class_type_id
+LEFT JOIN satis_level AS e
+	ON a.satis_level = e.satis_id;
+```
+2. Retrieve value from created view
+
+#### Retrieve all values from view
+```sql
+SELECT * FROM View_Customer_Satisfaction
+```
+
+#### Retrieve value with criteria
+```sql
+SELECT * FROM View_Customer_Satisfaction
+WHERE airline_name IN ("Air Arabia", "Bangkok Airway")
+	AND date_flown <> "";
+```
+
+![Screenshot](./img/data_loading/view_result.png)
+
+The values can change or update below
+
+| Value | Description |
+| ----- | --------------- |
+| airline_name | Enter the airline name as range |
+| date_flown | Enter date when passenger had flown |
+| age | Passenger age |
+| gender | Enter gender <br> 1. Male <br> 2. Female|
+| customer_type | Enter Customer type <br> 1. First-time <br> 2. Returning |
+| travel_type | Enter travel type <br> 1. Business <br> 2. Personal |
+| class_type | Enter class type <br> 1. Business <br> 2. Economy <br> 3. Economy Plus |
+| satis_level | Enter passenger satisfaction level <br> 1. Neutral or Dissatisfied <br> 2. Satisfied |
+| verified | Enter passenger verification status <br> 1. TRUE = Verified <br> 2. FALSE = Non-Verified|
+| recommend | Enter passenger recommend airline status <br> 1. yes <br> 2. no |
+
 
 <br/>
 <br/>
