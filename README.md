@@ -368,6 +368,7 @@ Select evaluate filled-in by passenger for analyze further more
 # Extract scores and other values from evaluate form for each customer
 evaluate_score = merge_df[
     [
+        "ID",
         "Departure Delay",
         "Arrival Delay",
         "Departure and Arrival Time Convenience",
@@ -387,6 +388,11 @@ evaluate_score = merge_df[
         "Value For Money",
     ]
 ]
+
+# Calculate total delay
+evaluate_score["total_delay"] = evaluate_score.loc[
+    :, ["Departure Delay", "Arrival Delay"]
+].sum(axis=1)
 
 # Export evaluate score filled by passengers
 evaluate_score.to_csv("../../file/evaluate_score.csv", index=True)
@@ -443,11 +449,11 @@ ALTER TABLE grouped_customer RENAME COLUMN Recommend to recommend;
 
 ### Step 3: Create view to retrieve values for analyze
 
-1. Create view to view grouped customer
+1. Create view to view grouped passenger
 
 ```sql
--- Create or replace view for customer satisfaction report
-CREATE OR REPLACE VIEW View_Customer_Satisfaction AS
+-- Create or replace view for passenger satisfaction report
+CREATE OR REPLACE VIEW View_Passenger_Satisfaction AS
 SELECT
 	a.airline_name as airline_name, 
 	a.date_flown as date_flown,
@@ -469,26 +475,27 @@ LEFT JOIN class_type AS d
 LEFT JOIN satis_level AS e
 	ON a.satis_level = e.satis_id;
 ```
-2. Retrieve value from created view
 
-#### Retrieve all values from view
+#### Retrieve all values from created view
 ```sql
-SELECT * FROM View_Customer_Satisfaction
+SELECT * FROM View_Passenger_Satisfaction
 ```
+![Screenshot](./img/data_loading/view_result_1.png)
+
 
 #### Retrieve value with criteria
 ```sql
-SELECT * FROM View_Customer_Satisfaction
+SELECT * FROM View_Passenger_Satisfaction
 WHERE airline_name IN ("Air Arabia", "Bangkok Airway")
 	AND date_flown <> "";
 ```
 
-![Screenshot](./img/data_loading/view_result.png)
+![Screenshot](./img/data_loading/view_result_2.png)
 
-The values can change or update below
+The values can be select as criteria below
 
 | Value | Description |
-| ----- | --------------- |
+| ---------- | -------------------- |
 | airline_name | Enter the airline name as range |
 | date_flown | Enter date when passenger had flown |
 | age | Passenger age |
@@ -500,6 +507,57 @@ The values can change or update below
 | verified | Enter passenger verification status <br> 1. TRUE = Verified <br> 2. FALSE = Non-Verified|
 | recommend | Enter passenger recommend airline status <br> 1. yes <br> 2. no |
 
+2. Create view to retrieve compensate that airline have to pay to passenger incase of delay
+
+```sql
+ CREATE OR REPLACE VIEW View_Compensate AS
+SELECT
+	a.id,
+    b.Gender as gender,
+    b.Age as age,
+    b.`Customer Type` as customer_type,
+    b.`Type of Travel` as travel_type,
+    b.Class as class_type,
+	a.departure_delay as departure_delay, 
+    a.arrival_delay as arrival_delay,
+    a.total_delay as total_delay,
+    CASE 
+		WHEN total_delay >= 0 AND total_delay <= 180 THEN 0
+        WHEN total_delay > 180 AND total_delay <= 300 THEN 400
+		WHEN total_delay > 300 AND total_delay <= 540 THEN 700
+        ELSE 1000
+	END AS compensate
+FROM evaluate_score AS a
+LEFT JOIN airline_passenger_satisfaction AS b
+	ON a.id = b.ID;
+```
+
+#### Retrieve all values from view
+```sql
+SELECT * FROM View_Compensate
+```
+
+![Screenshot](./img/data_loading/view_result_3.png)
+
+#### Retrieve value with criteria
+```sql
+SELECT * FROM View_Compensate 
+	where compensate > 0;
+```
+![Screenshot](./img/data_loading/view_result_4.png)
+
+The values can be select as criteria below
+
+| Value | Description |
+| ---------- | -------------------- |
+| age | Passenger age |
+| gender | Enter gender <br> 1. Male <br> 2. Female|
+| customer_type | Enter Customer type <br> 1. First-time <br> 2. Returning |
+| travel_type | Enter travel type <br> 1. Business <br> 2. Personal |
+| class_type | Enter class type <br> 1. Business <br> 2. Economy <br> 3. Economy Plus |
+| departure_delay | Enter passenger satisfaction level <br> 1. Neutral or Dissatisfied <br> 2. Satisfied |
+| verified | Enter passenger verification status <br> 1. TRUE = Verified <br> 2. FALSE = Non-Verified|
+| recommend | Enter passenger recommend airline status <br> 1. yes <br> 2. no |
 
 <br/>
 <br/>
