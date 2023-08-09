@@ -555,11 +555,25 @@ The values can be select as criteria below
 | customer_type | Enter Customer type <br> 1. First-time <br> 2. Returning |
 | travel_type | Enter travel type <br> 1. Business <br> 2. Personal |
 | class_type | Enter class type <br> 1. Business <br> 2. Economy <br> 3. Economy Plus |
-| departure_delay | Enter passenger satisfaction level <br> 1. Neutral or Dissatisfied <br> 2. Satisfied |
-| verified | Enter passenger verification status <br> 1. TRUE = Verified <br> 2. FALSE = Non-Verified|
-| recommend | Enter passenger recommend airline status <br> 1. yes <br> 2. no |
+| departure_delay | Enter number or range of departure delay as minutes |
+| arrival_delay | Enter number or range of arrival delay as minutes |
+| total_delay | Enter number or range of total delay as minutes |
+| compensate | Enter number of range of compensate in dollars that airline pays to passenger due to flight delay|
+
+### Summary
+
+After imported CSV files from transform data, They can created the views for analyze for gain more insight from them.   
 
 <br/>
-<br/>
 
-# 5. Reflection
+# 5. Reflection.
+
+From the previous processes until created the views as final step. What I have learnt are listed below
+
+1. The planning must be created as tasks and prioritize them before take any actions. Otherwise, it will be rework and spent much times in fixing the issues that occurred or redo the previous process.
+
+2. Understand the data what is going to process, as data always requires data dictionary to understand the meaning of them before process any actions.
+
+3. Understand the tools that is working with. Many tools has great features, it will reduce times in development much if I understand the key features that tool has.
+
+4. Thinking systemically, this will reduce the errors and prevent what are missing or lacks and lead to reworks.
